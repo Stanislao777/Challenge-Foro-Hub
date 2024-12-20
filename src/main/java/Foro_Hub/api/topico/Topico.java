@@ -6,6 +6,8 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Table(name = "topicos")
 @Entity(name = "Topico")
 @Getter
@@ -22,9 +24,19 @@ public class Topico {
     private String nombreCurso;
     private String titulo;
 
+    @Column(name = "fechaCreacion", updatable = false)
+    private LocalDateTime fechaCreacion;
+
     public Topico(DatosRegistroTopico datosRegistroTopico) {
         this.mensaje = datosRegistroTopico.mensaje();
         this.nombreCurso = datosRegistroTopico.nombreCurso();
         this.titulo = datosRegistroTopico.titulo();
+        // La fechaCreacion se asignará automáticamente en @PrePersist
+    }
+
+    // Método para asignar la fecha y hora al momento de la persistencia
+    @PrePersist
+    public void prePersist() {
+        this.fechaCreacion = LocalDateTime.now();  // Asigna la fecha y hora al momento de la persistencia
     }
 }

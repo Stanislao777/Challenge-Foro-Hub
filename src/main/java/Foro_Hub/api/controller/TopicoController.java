@@ -3,6 +3,7 @@ package Foro_Hub.api.controller;
 import Foro_Hub.api.topico.DatosRegistroTopico;
 import Foro_Hub.api.topico.Topico;
 import Foro_Hub.api.topico.TopicoRepository;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,7 +18,7 @@ public class TopicoController {
     private TopicoRepository topicoRepository;
 
     @PostMapping
-    public void registrarTopico(@RequestBody DatosRegistroTopico datosRegistroTopico) {
+    public void registrarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico) {
         topicoRepository.save(new Topico(datosRegistroTopico));
     }
 
