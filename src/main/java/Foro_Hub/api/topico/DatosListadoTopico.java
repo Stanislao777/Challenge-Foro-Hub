@@ -1,8 +1,10 @@
 package Foro_Hub.api.topico;
 
-public record DatosListadoTopico(String mensaje, String nombreCurso, String titulo) {
+import java.time.LocalDateTime;
+
+public record DatosListadoTopico(Long id, String titulo, String mensaje, LocalDateTime fechaCreacion) {
 
     public DatosListadoTopico(Topico topico) {
-        this(topico.getMensaje(), topico.getNombreCurso(), topico.getTitulo());
+        this(topico.getId(), topico.getTitulo(), topico.getMensaje(), topico.getFechaCreacion());
     }
 }
