@@ -6,6 +6,9 @@ import Foro_Hub.api.topico.Topico;
 import Foro_Hub.api.topico.TopicoRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,7 +26,7 @@ public class TopicoController {
     }
 
     @GetMapping
-    public List<DatosListadoTopico> listadoTopicos() {
-        return topicoRepository.findAll().stream().map(DatosListadoTopico::new).toList();
+    public Page<DatosListadoTopico> listadoTopicos(@PageableDefault(size = 2) Pageable paginacion) {
+        return topicoRepository.findAll(paginacion).map(DatosListadoTopico::new);
     }
 }
