@@ -1,10 +1,8 @@
 package Foro_Hub.api.topico;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import jakarta.validation.Valid;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
@@ -20,18 +18,20 @@ public class Topico {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     //private String idUsuario;
+    @Getter
     private String mensaje;
+    @Getter
     private String nombreCurso;
+    @Getter
     private String titulo;
 
     @Column(name = "fechaCreacion", updatable = false)
     private LocalDateTime fechaCreacion;
 
-    public Topico(DatosRegistroTopico datosRegistroTopico) {
+    public Topico(@Valid DatosRegistroTopico datosRegistroTopico) {
         this.mensaje = datosRegistroTopico.mensaje();
         this.nombreCurso = datosRegistroTopico.nombreCurso();
         this.titulo = datosRegistroTopico.titulo();
-        // La fechaCreacion se asignará automáticamente en @PrePersist
     }
 
     // Método para asignar la fecha y hora al momento de la persistencia
