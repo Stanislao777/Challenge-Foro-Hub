@@ -1,9 +1,7 @@
 package Foro_Hub.api.controller;
 
-import Foro_Hub.api.topico.DatosListadoTopico;
-import Foro_Hub.api.topico.DatosRegistroTopico;
-import Foro_Hub.api.topico.Topico;
-import Foro_Hub.api.topico.TopicoRepository;
+import Foro_Hub.api.topico.*;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -41,5 +39,9 @@ public class TopicoController {
     }
 
     @PutMapping
-    public void actualizarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico) {}
+    @Transactional
+    public void actualizarTopico(@RequestBody @Valid DatosActualizarTopico datosActualizarTopico) {
+        Topico topico = topicoRepository.getReferenceById(datosActualizarTopico.id());
+        topico.actualizarDatos(datosActualizarTopico);
+    }
 }

@@ -39,4 +39,13 @@ public class Topico {
     public void prePersist() {
         this.fechaCreacion = LocalDateTime.now();  // Asigna la fecha y hora al momento de la persistencia
     }
+
+    public void actualizarDatos(DatosActualizarTopico datosActualizarTopico) {
+        if (datosActualizarTopico.titulo() != null) {
+            this.titulo = datosActualizarTopico.titulo();
+        }
+        if (datosActualizarTopico.mensaje() != null) {
+            this.mensaje = datosActualizarTopico.mensaje();
+        }
+    }
 }
