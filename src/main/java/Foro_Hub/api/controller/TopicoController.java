@@ -35,7 +35,8 @@ public class TopicoController {
     public Page<DatosListadoTopico> listadoTopicos(@PageableDefault(size = 2) Pageable paginacion) {
         //return topicoRepository.findAll(paginacion).map(DatosListadoTopico::new);
         Pageable paginacionConOrden = PageRequest.of(paginacion.getPageNumber(), paginacion.getPageSize(), Sort.by(Sort.Order.desc("id")));
-        return topicoRepository.findAll(paginacionConOrden).map(DatosListadoTopico::new);
+        //return topicoRepository.findAll(paginacionConOrden).map(DatosListadoTopico::new);
+        return topicoRepository.findByActivoTrue(paginacionConOrden).map(DatosListadoTopico::new);
     }
 
     @PutMapping
@@ -45,10 +46,17 @@ public class TopicoController {
         topico.actualizarDatos(datosActualizarTopico);
     }
 
+// DELETE LÓGICO
     @DeleteMapping("/{id}")
     @Transactional
     public void eliminarTopico(@PathVariable Long id) {
         Topico topico = topicoRepository.getReferenceById(id);
-        topicoRepository.delete(topico);
+        topico.desactivarTopico();
     }
+
+// DELETE EN BASE DE DATOS
+//    public void eliminarTopico(@PathVariable Long id) {
+//        Topico topico = topicoRepository.getReferenceById(id);
+//        topicoRepository.delete(topico);
+//    }
 }

@@ -25,10 +25,13 @@ public class Topico {
     @Getter
     private String titulo;
 
+    private Boolean activo;
+
     @Column(name = "fechaCreacion", updatable = false)
     private LocalDateTime fechaCreacion;
 
     public Topico(@Valid DatosRegistroTopico datosRegistroTopico) {
+        this.activo = true;
         this.mensaje = datosRegistroTopico.mensaje();
         this.nombreCurso = datosRegistroTopico.nombreCurso();
         this.titulo = datosRegistroTopico.titulo();
@@ -47,5 +50,9 @@ public class Topico {
         if (datosActualizarTopico.mensaje() != null) {
             this.mensaje = datosActualizarTopico.mensaje();
         }
+    }
+
+    public void desactivarTopico() {
+        this.activo = false;
     }
 }
