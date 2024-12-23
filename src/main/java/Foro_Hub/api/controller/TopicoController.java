@@ -11,6 +11,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,12 @@ public class TopicoController {
     private TopicoRepository topicoRepository;
 
     @PostMapping
-    public void registrarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico) {
-        topicoRepository.save(new Topico(datosRegistroTopico));
+    public ResponseEntity<DatosListadoTopico> registrarTopico(@RequestBody @Valid DatosRegistroTopico datosRegistroTopico) {
+        // Guardar el nuevo Topico en la base de datos
+        Topico nuevoTopico = topicoRepository.save(new Topico(datosRegistroTopico));
+        // Crear el DTO para devolver con los datos del nuevo Topico
+        return ResponseEntity.status(HttpStatus.CREATED)
+                             .body(new DatosListadoTopico(nuevoTopico));
     }
 
     @GetMapping
