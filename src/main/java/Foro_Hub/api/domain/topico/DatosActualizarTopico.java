@@ -1,4 +1,4 @@
-package Foro_Hub.api.topico;
+package Foro_Hub.api.domain.topico;
 
 import jakarta.validation.constraints.NotNull;
 
